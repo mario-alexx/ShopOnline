@@ -11,4 +11,15 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.27" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ShopOnline.Models\ShopOnline.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\Beauty\" />
+    <Folder Include="wwwroot\images\Electronic\" />
+    <Folder Include="wwwroot\images\Furniture\" />
+    <Folder Include="wwwroot\images\Shoes\" />
+  </ItemGroup>
+
 </Project>
