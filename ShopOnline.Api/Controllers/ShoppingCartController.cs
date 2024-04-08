@@ -60,7 +60,7 @@ namespace ShopOnline.Api.Controllers
 
                 if (cartItem == null)
                 {
-                    return NoContent();
+                    return NotFound();
                 }
 
                 var product = await _productRepository.GetItem(cartItem.ProductId);
@@ -103,6 +103,59 @@ namespace ShopOnline.Api.Controllers
                 var newCartItemDto = newCartItem.ConverToDto(product);
                 
                 return CreatedAtAction(nameof(GetItem), new { id = newCartItemDto.Id }, newCartItemDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<CartItemDto>> DeleteItem(int id)
+        {
+            try
+            {
+                var cartItem = await _shoppingCartRepository.DeleteItem(id);
+
+                if(cartItem == null)
+                {
+                    return NotFound();
+                }
+
+                var product = await _productRepository.GetItem(cartItem.ProductId);
+
+                if (product == null)
+                {
+                    return NotFound();
+                }
+
+                var cartItemDto = cartItem.ConverToDto(product);
+
+                return Ok(cartItemDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPatch("{id:int}")]
+        public async Task<ActionResult<CartItemDto>> UpdateQty(int id, CartItemQtyUpdateDto cartItemQtyUpdateDto )
+        {
+            try
+            {
+                var cartItem = await _shoppingCartRepository.UpdateQty(id, cartItemQtyUpdateDto);
+            
+                if(cartItem == null)
+                {
+                    return NotFound();
+                }
+
+                var product = await _productRepository.GetItem(cartItem.ProductId);
+
+                var cartItemDto = cartItem.ConverToDto(product);
+
+                return Ok(cartItemDto);
             }
             catch (Exception ex)
             {

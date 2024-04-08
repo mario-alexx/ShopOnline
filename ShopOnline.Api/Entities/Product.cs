@@ -12,7 +12,7 @@ namespace ShopOnline.Api.Entities
         public int Qty { get; set; }
         public int CategoryId { get; set; }
 
-        //[ForeignKey("CategoryId")]
-        //public ProductCategory ProductCategory { get; set; }
+        [ForeignKey("CategoryId")]
+        public ProductCategory ProductCategory { get; set; }
     }
 }
